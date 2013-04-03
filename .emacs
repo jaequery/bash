@@ -41,3 +41,25 @@
 
 (global-set-key [next] 'scroll-up-half)
 (global-set-key [prior] 'scroll-down-half)
+
+
+;ido-mode on
+(setq ido-enable-flex-matching t)
+  (setq ido-everywhere t)
+  (ido-mode 1)
+
+;elpa
+ (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                           ("marmalade" . "http://marmalade-repo.org/packages/")
+                           ("melpa" . "http://melpa.milkbox.net/packages/")))
+;magit
+;; change magit diff colors
+(eval-after-load 'magit
+  '(progn
+     (set-face-foreground 'magit-diff-add "green3")
+     (set-face-foreground 'magit-diff-del "red3")
+     (when (not window-system)
+       (set-face-background 'magit-item-highlight "black"))))
+
+;macosx
+(setq mac-command-modifier 'meta)
