@@ -2,14 +2,14 @@
 
 ;; This is a version of the php-mode from http://php-mode.sourceforge.net that
 ;; fixes a few bugs which make using php-mode much more palatable, namely:
-;; 
+;;
 ;; 1. New customisation options for some of the syntax highlighting
 ;;   features. I personally use the 'Gauchy' level of syntax
 ;;   highlighting -- I want variables and function calls fontified --
 ;;   but there were several very annoying "features" in this level of
 ;;   syntax highlighting, particularly the ones that warn you about
 ;;   perfectly valid code. I've added:
-;; 
+;;
 ;;   * `php-mode-dollar-property-warning', which, if non-nil, warns on
 ;;     $foo->$bar. (Default is nil.)
 ;;   * `php-mode-dot-property-warning', which, if non-nil, warns on
@@ -19,20 +19,20 @@
 ;;   * `php-mode-warn-if-mumamo-off', which, if nil, suppresses the
 ;;     once-per-file warning about indenting with mumamo-mode turned
 ;;     off. (Default is t)
-;; 
+;;
 ;; 2. Bugfix in `php-show-arglist': this function no longer jumps to the
 ;;   function definition if that definition is in the current buffer.
-;; 
+;;
 ;; 3. Bugfix: 'class' keywords at the beginning of a line are now
 ;;   correctly fontified.
-;; 
+;;
 ;; This has been submitted to the php-mode maintainer, but I've not yet had a
 ;; response.
 ;;
 ;; This was branched from the php-mode in nxhtml-mode, so if you have problems,
 ;; download the latest nxhtml-mode, and replace related/php-mode.el in the
 ;; nxhtml distribution with this file.
-;; 
+;;
 ;; -- David House, dmhouse@gmail.com
 
 ;; Copyright (C) 1999, 2000, 2001, 2003, 2004 Turadg Aleahmad
@@ -156,7 +156,7 @@
 (require 'etags)
 (eval-when-compile
   (require 'regexp-opt))
- 
+
 ;; Local variables
 (defgroup php nil
   "Major mode `php-mode' for editing PHP code."
@@ -281,7 +281,7 @@ have any tags inside a PHP string, it will be fooled."
   :type '(choice (const :tag "Warn" t) (const "Don't warn" nil))
   :group 'php)
 
- 
+
 (eval-when-compile
   (defconst php-mode-modified
     (save-excursion
@@ -328,7 +328,7 @@ See `php-beginning-of-defun'."
   (interactive "p")
   (php-beginning-of-defun (- (or arg 1))))
 
- 
+
 (defvar php-completion-table nil
   "Obarray of tag names defined in current tags table and functions know to PHP.")
 
@@ -347,7 +347,9 @@ See `php-beginning-of-defun'."
       ;;(setq php-warned-bad-indent nil)
       (let* ((known-multi-libs '(("mumamo" mumamo (lambda () (nxhtml-mumamo)))
                                  ("mmm-mode" mmm-mode (lambda () (mmm-mode 1)))
+                                 ("multi-web-mode" multi-web-mode (lambda () (multi-web-mode 1)))
                                  ("multi-mode" multi-mode (lambda () (multi-mode 1)))))
+
              (known-names (mapcar (lambda (lib) (car lib)) known-multi-libs))
              (available-multi-libs (delq nil
                                          (mapcar
@@ -511,7 +513,7 @@ See `php-beginning-of-defun'."
        php-beginning-of-defun-regexp)
 
   (run-hooks 'php-mode-hook))
- 
+
 ;; Make a menu keymap (with a prompt string)
 ;; and make it the menu bar item's definition.
 (define-key php-mode-map [menu-bar] (make-sparse-keymap))
@@ -527,7 +529,7 @@ See `php-beginning-of-defun'."
 (define-key php-mode-map
   [menu-bar php search-documentation]
   '("Search documentation" . php-search-documentation))
- 
+
 ;; Define function name completion function
 (defun php-complete-function ()
   "Perform function completion on the text around point.
@@ -653,7 +655,7 @@ for \\[find-tag] (which see)."
     (if arglist
         (message "Arglist for %s: %s" tagname arglist)
       (message "Unknown function: %s" tagname))))
- 
+
 ;; Define function documentation function
 (defun php-search-documentation ()
   "Search PHP documentation for the word at the point."
@@ -685,7 +687,7 @@ for \\[find-tag] (which see)."
 (define-key php-mode-map
   '[(control .)]
   'php-show-arglist)
- 
+
 (defconst php-constants
   (eval-when-compile
     (regexp-opt
