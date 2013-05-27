@@ -37,7 +37,7 @@
    (setq mweb-filename-extensions '("php" "htm" "html" "ctp" "phtml" "php4" "php5"))
    (multi-web-global-mode 1)
 
-; screens
+;screens
 (defun window-half-height ()
   (max 1 (/ (1- (window-height (selected-window))) 2)))
 
@@ -73,3 +73,10 @@
 
 ;macosx
 (setq mac-command-modifier 'meta)
+
+;navigation
+;; Faster point movement
+(global-set-key "\M-\C-p"
+  '(lambda () (interactive) (previous-line 5)))
+(global-set-key "\M-\C-n"
+  '(lambda () (interactive) (next-line 5)))
